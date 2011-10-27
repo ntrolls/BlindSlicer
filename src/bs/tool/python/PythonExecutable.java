@@ -1,7 +1,7 @@
 /**
  * 
  */
-package bs.tool.c;
+package bs.tool.python;
 
 import bs.tool.Executable;
 
@@ -9,15 +9,15 @@ import bs.tool.Executable;
  * @author ntrolls
  *
  */
-public class CExecutable implements Executable
+public class PythonExecutable implements Executable
 {
-	private String path = null;
-	
-	public CExecutable(String path)
+
+	private String path;
+
+	public PythonExecutable(String path)
 	{
 		this.path = path;
 	}
-
 	/* (non-Javadoc)
 	 * @see bs.tool.Executable#path()
 	 */
@@ -33,8 +33,7 @@ public class CExecutable implements Executable
 	@Override
 	public String cmd()
 	{
-		// TODO Auto-generated method stub
-		return path();
+		return "python " + path();
 	}
 
 }

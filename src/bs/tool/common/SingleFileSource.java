@@ -29,7 +29,7 @@ public class SingleFileSource implements Source
 		
 		BufferedReader reader = new BufferedReader(new FileReader(sourceFile));
 		while((line = reader.readLine()) != null)
-			lines.add(line + "\n");
+			lines.add(line);
 		this.name = sourceFile.getName();
 	}
 	
@@ -110,6 +110,12 @@ public class SingleFileSource implements Source
 		for(String line: lines)
 			buffer.append(line);
 		return buffer.toString();
+	}
+
+	@Override
+	public String getLine(int index) 
+	{
+		return lines.get(index);
 	}
 
 }

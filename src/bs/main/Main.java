@@ -3,9 +3,8 @@
  */
 package bs.main;
 
-import java.io.IOException;
-
 import bs.expt.wc.WordCounterInCExpt;
+import bs.tool.Experiment;
 
 /**
  * @author ntrolls
@@ -13,9 +12,10 @@ import bs.expt.wc.WordCounterInCExpt;
  */
 public class Main
 {
-	public static void main(String[] main) throws IOException
+	public static void main(String[] main) throws Exception
 	{
-		WordCounterInCExpt e = new WordCounterInCExpt();
+		Experiment e = new WordCounterInCExpt();
 		e.run();
+		System.exit(0);
 	}
 }

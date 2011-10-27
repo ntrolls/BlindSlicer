@@ -10,4 +10,5 @@ package bs.tool;
 public interface Executable
 {
 	public String path();
+	public String cmd();
 }

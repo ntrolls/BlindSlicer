@@ -55,8 +55,12 @@ public class WordCounterTester implements Tester
 	@Override
 	public boolean isIdentical(Result original, Result sliced)
 	{
+		
+		if(original == null || sliced == null)
+			return false;
 		int o = parseResult(original.toString());
 		int s = parseResult(sliced.toString());
+		System.out.println(o + " : " + s);
 		return o == s;
 	}
 

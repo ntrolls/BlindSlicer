@@ -3,12 +3,16 @@
  */
 package bs.tool.common;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+
+import javax.swing.Timer;
 
 import bs.data.Result;
 import bs.data.Test;
@@ -19,26 +23,29 @@ import bs.tool.Executor;
  * @author ntrolls
  *
  */
-public class PipeExecutor implements Executor
+public class PipeExecutor implements Executor, ActionListener
 {
-
+	static Process p = null;
+	
 	/* (non-Javadoc)
 	 * @see bs.tool.Executor#execute(bs.tool.Executable)
 	 */
 	@Override
 	public Result execute(Executable executable, Test test)
 	{
-		String cmd = executable.path();
-		Process p;
+		String cmd = executable.cmd();
 		try
 		{
-			p = Runtime.getRuntime().exec(cmd);			
+			p = Runtime.getRuntime().exec(cmd);
+			Timer t = new Timer(3000, this);
+			t.start();
 			InputStream in = p.getInputStream();
 			OutputStream out = p.getOutputStream();
 			PrintWriter writer = new PrintWriter(out);
 			writer.print(test.inputValue());
 			writer.close();
 			p.waitFor();
+			t.stop();
 			
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 			StringBuffer buffer = new StringBuffer();
@@ -47,16 +54,27 @@ public class PipeExecutor implements Executor
 			{
 				buffer.append(line);
 			}
+			p = null;
 			return new StringResult(buffer.toString());
 		} catch (IOException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return null;
 		} catch (InterruptedException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return null;
 		}
-		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	@Override
+	public void actionPerformed(ActionEvent arg0)
+	{
+		if(p != null)
+		{
+			System.err.println("timeout!");
+			p.destroy();
+		}
 	}
 }

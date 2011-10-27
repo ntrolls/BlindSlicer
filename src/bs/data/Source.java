@@ -15,6 +15,7 @@ public interface Source
 	public String executableName();
 	public String path();
 	public int length();
+	public String getLine(int index);
 	public Vector<String> lines();
 	public String toString();
 }

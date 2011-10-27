@@ -27,7 +27,7 @@ public class BitMask implements Mask
 	 * @see bs.tool.Mask#apply(bs.tool.Source)
 	 */
 	@Override
-	public Source apply(Source original)
+	public Source applyToSource(Source original)
 	{
 		assert(original.length() == mask.size());
 		Vector<String> retained = new Vector<String>();
@@ -39,9 +39,34 @@ public class BitMask implements Mask
 		return new SingleFileSource("sliced_" + original.name(), retained);
 	}
 	
-	public void set(int index, boolean b)
+	@Override
+	public void set(int index, int s)
 	{
-		mask.put(index, b);
+		mask.put(index, s == 1);
+	}
+	
+	@Override
+	public int get(int index)
+	{
+		return mask.get(index) ? Mask.RETAINED : Mask.DELETED;
+	}
+	
+	public String toString()
+	{
+		return mask.toString();
 	}
 
+	@Override
+	public int size() 
+	{
+		return mask.cardinality();
+	}
+
+	@Override
+	public int length() 
+	{
+		return mask.size();
+	}
+	
+	
 }
