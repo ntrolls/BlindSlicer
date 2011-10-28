@@ -1,0 +1,54 @@
+static int isletter(char c);
+
+main()
+{
+	char c;
+	int inword;
+	int lines;
+	int words;
+	int characters;
+	
+  	inword = 0;
+  	characters = 0;
+  	lines = 0;
+  	words = 0;
+
+	while (scanf("%c", &c) == 1)
+	{
+		characters  = characters + 1;
+
+		if (c == '\n')
+			lines = lines + 1;
+
+		if (isletter(c))
+    	{
+      		if (inword == 0)
+      		{
+        		words = words + 1;
+        		inword = 1;
+      		}
+    	}
+    	else
+		{
+      		inword = 0;
+		}
+
+	}
+
+	printf("%d ", lines);
+	printf("%d ", words);
+	printf("%d ", characters); //blindslice
+	printf("\n");
+}
+
+static int isletter(char c)
+{
+	if (((c >= 'A' ) && (c <= 'Z')) ||(c >= 'a' ) && (c <= 'z'))
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
