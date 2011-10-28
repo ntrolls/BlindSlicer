@@ -3,10 +3,9 @@ package bs.tool.slicer;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Vector;
 
 import org.antlr.runtime.RecognitionException;
-
-import com.floyd.Floyd;
 
 import bs.data.Mask;
 import bs.data.Source;
@@ -17,6 +16,8 @@ import bs.tool.common.InputFileTestSuite;
 import bs.tool.common.MappingMask;
 import bs.tool.common.PipeExecutor;
 import bs.tool.common.SingleFileSource;
+
+import com.floyd.Floyd;
 
 public class GreedySlicer extends Slicer {
 
@@ -55,7 +56,7 @@ public class GreedySlicer extends Slicer {
 				
 				if(mask.get(i) == Mask.DELETED || originalSource.getLine(i).trim().length() == 0)
 					continue;
-				System.out.println(sliced.getLine(i).replace("\n", ""));
+//				System.out.println(sliced.getLine(i).replace("\n", ""));
 				
 				oldMaskDigit = mask.get(i);
 				mask.set(i, Mask.DELETED);
@@ -64,24 +65,42 @@ public class GreedySlicer extends Slicer {
 				Executable e = compiler.compile(sliced);
 				if(e == null)
 				{
-					System.out.println("\tdon't compile if deleted");
+//					System.out.println("\tdon't compile if deleted");
 					mask.set(i, oldMaskDigit);
 				}
 				else
 				{
 					if(!tester.test(executor, original, e, testsuite))
 					{
-						System.out.println("\tdon't pass test if deleted");
+//						System.out.println("\tdon't pass test if deleted");
 						mask.set(i, oldMaskDigit);
 					}
 					else
 					{
-						System.out.println("\tcan be deleted!");
+//						System.out.println("\tcan be deleted!");
 						bDeleted = true;
-						floyd.setLines(sliced.lines());
 					}
 				}
 				
+//				floyd.setLines(sliced.lines());
+//				for(int j = 0; j < sliced.length(); j++)
+//				{
+//					floyd.setCurrentLine(j);
+//					try
+//					{
+//						System.out.println("====== Begin Cleaning =================");
+//						Vector<String> cleaned = floyd.cleanUp();
+//						for(String line: cleaned)
+//						{
+//							System.out.println(line);
+//						}
+//						System.out.println("======= End Cleaning  ================");
+//					} catch (RecognitionException e1)
+//					{
+//						// TODO Auto-generated catch block
+//						e1.printStackTrace();
+//					}
+//				}
 
 			}
 			pass += 1;

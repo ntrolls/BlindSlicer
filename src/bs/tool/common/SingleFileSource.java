@@ -64,7 +64,7 @@ public class SingleFileSource implements Source
 			{
 				writer = new FileWriter(tmpSource);
 				for(String line: lines)
-					writer.write(line);
+					writer.write(line + "\n");
 				writer.flush();
 				writer.close();
 				this.path = tmpSource.getAbsolutePath();
@@ -108,7 +108,7 @@ public class SingleFileSource implements Source
 	{
 		StringBuffer buffer = new StringBuffer();
 		for(String line: lines)
-			buffer.append(line);
+			buffer.append(line + "\n");
 		return buffer.toString();
 	}
 

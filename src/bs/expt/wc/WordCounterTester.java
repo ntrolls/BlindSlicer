@@ -60,7 +60,6 @@ public class WordCounterTester implements Tester
 			return false;
 		int o = parseResult(original.toString());
 		int s = parseResult(sliced.toString());
-		System.out.println(o + " : " + s);
 		return o == s;
 	}
 
