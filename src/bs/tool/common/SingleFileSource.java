@@ -14,25 +14,25 @@ import bs.data.Source;
 
 /**
  * @author ntrolls
- *
+ * 
  */
 public class SingleFileSource implements Source
 {
 	private String name = null;
 	private Vector<String> lines = new Vector<String>();
 	private String path = null;
-	
+
 	public SingleFileSource(String path) throws IOException
 	{
 		File sourceFile = new File(path);
 		String line;
-		
+
 		BufferedReader reader = new BufferedReader(new FileReader(sourceFile));
-		while((line = reader.readLine()) != null)
+		while ((line = reader.readLine()) != null)
 			lines.add(line);
 		this.name = sourceFile.getName();
 	}
-	
+
 	public SingleFileSource(String name, Vector<String> lines)
 	{
 		this.name = name;
@@ -55,23 +55,9 @@ public class SingleFileSource implements Source
 	@Override
 	public String path()
 	{
-		if(path == null)
+		if (path == null)
 		{
-			String tmpDir = System.getProperty("java.io.tmpdir");
-			File tmpSource = new File(tmpDir + name);
-			FileWriter writer;
-			try
-			{
-				writer = new FileWriter(tmpSource);
-				for(String line: lines)
-					writer.write(line + "\n");
-				writer.flush();
-				writer.close();
-				this.path = tmpSource.getAbsolutePath();
-			} catch (IOException e)
-			{
-				e.printStackTrace();
-			}
+			this.path = dump();
 		}
 		return path;
 	}
@@ -103,19 +89,48 @@ public class SingleFileSource implements Source
 	{
 		return lines;
 	}
-	
+
 	public String toString()
 	{
 		StringBuffer buffer = new StringBuffer();
-		for(String line: lines)
+		for (String line : lines)
 			buffer.append(line + "\n");
 		return buffer.toString();
 	}
 
 	@Override
-	public String getLine(int index) 
+	public String getLine(int index)
 	{
 		return lines.get(index);
+	}
+
+	@Override
+	public void setLine(int index, String value)
+	{
+		lines.set(index, value);
+		dump();
+	}
+
+	@Override
+	public String dump()
+	{
+		String tmpDir = System.getProperty("java.io.tmpdir");
+		File tmpSource = new File(tmpDir + name);
+		FileWriter writer;
+		try
+		{
+			writer = new FileWriter(tmpSource);
+			for (String line : lines)
+				writer.write(line + "\n");
+			writer.flush();
+			writer.close();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		return tmpSource.getAbsolutePath();
+
 	}
 
 }

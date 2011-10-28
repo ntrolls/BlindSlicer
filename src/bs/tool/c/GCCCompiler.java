@@ -13,7 +13,7 @@ import bs.tool.Executable;
 
 /**
  * @author ntrolls
- *
+ * 
  */
 public class GCCCompiler implements Compiler
 {
@@ -30,22 +30,23 @@ public class GCCCompiler implements Compiler
 		{
 			Process gcc = Runtime.getRuntime().exec(cmd);
 			gcc.waitFor();
-			
+
 			BufferedReader reader = new BufferedReader(new InputStreamReader(gcc.getErrorStream()));
 			StringBuffer buffer = new StringBuffer();
 			String line;
-			while((line = reader.readLine()) != null)
+			while ((line = reader.readLine()) != null)
 			{
 				buffer.append(line + "\n");
 			}
-			
-			if(gcc.exitValue() == 0)
+
+			if (gcc.exitValue() == 0)
 				return new CExecutable(tmpDir + source.executableName());
-			
-		} catch (IOException e)
+		}
+		catch (IOException e)
 		{
 			e.printStackTrace();
-		} catch (InterruptedException e)
+		}
+		catch (InterruptedException e)
 		{
 			e.printStackTrace();
 		}
