@@ -5,11 +5,7 @@ import java.io.IOException;
 import java.util.Vector;
 
 import bs.data.Source;
-import bs.data.TestSuite;
 import bs.tool.Executable;
-import bs.tool.Executor;
-import bs.tool.common.InputFileTestSuite;
-import bs.tool.common.PipeExecutor;
 import bs.tool.common.SingleFileSource;
 
 import com.floyd.Floyd;
@@ -21,9 +17,6 @@ public class GreedySlicer extends Slicer
 	public Source slice(Source originalSource)
 	{
 		Executable original = compiler.compile(originalSource);
-		Executor executor = new PipeExecutor();
-		TestSuite testsuite = new InputFileTestSuite("/Users/ntrolls/Projects/BlindSlicer/subjects/wc/testsuite");
-
 		Source sliced = new SingleFileSource("sliced_" + originalSource.name(), originalSource.lines());
 		boolean bDeleted = false;
 		Floyd floyd = new Floyd();

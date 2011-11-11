@@ -14,7 +14,7 @@ import bs.tool.Tester;
 
 /**
  * @author ntrolls
- *
+ * 
  */
 public class WordCounterTester implements Tester
 {
@@ -26,22 +26,22 @@ public class WordCounterTester implements Tester
 	public boolean test(Executor executor, Executable original, Executable sliced, TestSuite testsuite)
 	{
 		Collection<Test> tests = testsuite.getTests();
-		for(Test test: tests)
-		{	
+		for (Test test : tests)
+		{
 			Result result_original = executor.execute(original, test);
 			Result result_sliced = executor.execute(sliced, test);
-			if(!isIdentical(result_original, result_sliced))
+			if (!isIdentical(result_original, result_sliced))
 				return false;
 		}
 		return true;
 	}
-	
+
 	int parseResult(String result)
 	{
 		String[] tokens = result.split(" ");
-		for(String token: tokens)
+		for (String token : tokens)
 		{
-			if(token.startsWith("@"))
+			if (token.startsWith("@"))
 			{
 				return Integer.parseInt(token.substring(1));
 			}
@@ -55,12 +55,12 @@ public class WordCounterTester implements Tester
 	@Override
 	public boolean isIdentical(Result original, Result sliced)
 	{
-		
-		if(original == null || sliced == null)
+
+		if (original == null || sliced == null)
 			return false;
+		System.out.println(original + " vs. " + sliced);
 		int o = parseResult(original.toString());
 		int s = parseResult(sliced.toString());
 		return o == s;
 	}
-
 }
