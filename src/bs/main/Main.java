@@ -3,7 +3,7 @@
  */
 package bs.main;
 
-import bs.expt.scam.ScamMugExpt;
+import bs.expt.mbe.MBEExpt;
 import bs.tool.Experiment;
 
 /**
@@ -14,7 +14,7 @@ public class Main
 {
 	public static void main(String[] main) throws Exception
 	{
-		Experiment e = new ScamMugExpt();
+		Experiment e = new MBEExpt();
 		e.run();
 		System.exit(0);
 	}
